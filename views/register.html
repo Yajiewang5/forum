@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/register.css">
+
+</head>
+
+<body>
+
+    {{block 'content'}}
+
+    <div class="box">
+        <h2>Account Information</h2>
+        <form class="bs-example bs-example-form" role="form" id="register_form">
+            <div class="input-group cell">
+                <span class="input-group-addon">email:</span>
+                <input type="text" class="form-control" placeholder="email" name="email">
+            </div>
+            <br>
+            <div class="input-group cell">
+                <span class="input-group-addon">account:</span>
+                <input type="text" class="form-control" placeholder="name" name="nickname">
+            </div>
+            <br>
+            <div class="input-group cell">
+                <span class="input-group-addon">password:</span>
+                <input type="password" autocomplete="off" class="form-control" placeholder="password" name="password">
+            </div>
+
+            <div class="input-group subBtn">
+                <button type="submit" class="btn btn-success" id="submit">submit</button>
+                <button class="btn btn-primary" id="cancel">cancel</button>
+            </div>
+            <div class="input-group tip">
+                <span>already have account?
+                    <a href="/login">login</a>
+                </span>
+                <span>
+                    <a href="/">homepage</a>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    {{/block}}
+
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+
+            $('#register_form').on('submit', function (e) {
+                e.preventDefault()
+                let formData = $(this).serialize()
+                $.ajax({
+                    type: 'POST',
+                    url: '/register',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code === 0) {
+                            window.alert('sigup success, redirect to homepage')
+                            window.location.href = "/"
+                        } else if (data.code === 1) {
+                            window.alert('email or account already exist')
+                        } else if (data.code === 500) {
+                            window.alert('server error')
+                        }
+                    }
+                })
+            })
+
+            $('#cancel').on('click', function () {
+                window.location.pathname = '/'
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/login.css">
+</head>
+
+<body>
+
+    {{block 'content'}}
+
+    <div class="box">
+        <h2>login</h2>
+        <form class="bs-example bs-example-form" role="form" id="login_form">
+            <div class="input-group cell">
+                <span class="input-group-addon">email:</span>
+                <input type="text" class="form-control" placeholder="请输入邮箱" name="email">
+            </div>
+            <br>
+            <div class="input-group cell">
+                <span class="input-group-addon">password:</span>
+                <input type="password" autocomplete="off" class="form-control" placeholder="请输入密码" name="password">
+            </div>
+
+            <div class="input-group subBtn">
+                <button type="submit" class="btn btn-success" id="submit">submit</button>
+                <a href="/" class="btn btn-danger" id="cancel">cancel</a>
+            </div>
+
+            <div class="input-group tip">
+                <span>do not have account<a href="/register">create account</a></span>
+                <span>
+                    
+                    <a href="/">back to homepage</a>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    {{/block}}
+
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+
+            $('#login_form').on('submit', function (e) {
+                e.preventDefault()
+                let formData = $(this).serialize()
+                $.ajax({
+                    type: 'POST',
+                    url: '/login',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code === 0) {
+                            window.alert('login success, redirect to homepage')
+                            window.location.href = '/'
+                        } else if (data.code === 1) {
+                            window.alert('email or accountname invalid')
+                        } else if (data.code === 500) {
+                            window.alert('server error')
+                        }
+                    }
+                })
+            })
+            // $('#cancel').on('click', function () {
+            //     window.location.pathname = '/'
+            // })
+        })
+    </script>
+</body>
+
+</html>

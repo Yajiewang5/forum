@@ -1,0 +1,78 @@
+{{extend './layout.html'}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/userInfor.css">
+{{/block}}
+
+
+{{block 'content'}}
+<main>
+    <div class="container">
+        <form action="" id="userInfo_form">
+            <div>
+                <label for="">email</label>
+                <input type="text" name="email" value={{user.email}} readonly="readonly">
+            </div>
+            <div>
+                <label for="">account name</label>
+                <input type="text" name="nickname" value={{user.nickname}}>
+            </div>
+            <div>
+                <label for="">gender</label>
+                <input type="text" name="gender" value={{user.gender}}>
+            </div>
+            <div>
+                <button class="btn btn-primary">confirm</button>
+                <a href="/" class="btn btn-danger">cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+{{/block}}
+
+{{block 'script'}}
+<script>
+    $(function () {
+        $('.userInfo').on('click', function () {
+            $('.userCount').toggle()
+        })
+
+
+        if ($('input[name=gender]').val() === '-1') {
+            $(this).val("default")
+            console.log('change')
+        }
+
+
+
+        
+
+        $('#userInfo_form').on('submit', function (e) {
+            e.preventDefault()
+            let formData = $(this).serialize()
+            // console.log(formData)
+
+            $.ajax({
+                type: 'POST',
+                url: '/userInfo',
+                dataType: 'json',
+                data: formData,
+                success: function (data) {
+                    // console.log(data)
+                    if(data.code === 0) {
+                        window.alert('change information successed, redirect to homepage')
+                        window.location.href = '/'
+                    }else {
+                        window.alert('failed')
+                    }
+                }
+            })
+        })
+
+
+
+
+        // if()
+    })
+</script>
+
+{{/block}}

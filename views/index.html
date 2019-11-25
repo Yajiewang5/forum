@@ -1,0 +1,81 @@
+{{extend './layout.html'}}
+
+{{block 'head'}}
+
+<link rel="stylesheet" href="/public/css/index.css">
+{{/block}}
+
+
+{{block 'content'}}
+<main>
+    <div class="container">
+        <aside>
+            <div class="panel"></div>
+            <div class="panel">
+                {{if user}}
+                <a href="/publish" class="btn btn-success">Post new topic</a>
+                {{else}}
+
+                {{/if}}
+            </div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+        </aside>
+        <div class="main">
+            <div class="inner">
+            </div>
+        </div>
+    </div>
+</main>
+{{/block}}
+
+
+{{block 'script'}}
+<script>
+    // let dataInfo = null
+    $(function () {
+        $('.search').focus(function () {
+            $(this).css('backgroundColor', '#fff')
+        })
+        $('.search').blur(function () {
+            $(this).css('backgroundColor', '#888');
+        })
+
+
+        $('.userInfo').on('click', function () {
+            $('.userCount').toggle()
+        })
+
+        // console.log(user)
+
+        $.ajax({
+            type: 'GET',
+            url: '/userPushInfo',
+            // dataType: 'json',
+            success: function (data) {
+                // console.log(data)
+                if (data.code === 0) {
+                    console.log(data)
+                    for (let i = 0; i < data.message.length; i++) {
+                        let datas = data.message[i]
+                        $('.inner').append(
+                            `<div class="cell">
+                                用户：<span class="userNickname">${datas.nickname}</span>
+                                标题：<span class="userTitle">${datas.title}</span> 
+                                </div>`
+                                // <span class="userContent">内容：${datas.content}</span>
+                                )
+                    }
+                }
+                                if ($('.userNickname').text() == 'undefined') {
+                                    $(this).text() = ''
+                                }
+                                console.log($(this).text())
+            }
+        })
+
+
+
+    })
+</script>
+{{/block}}

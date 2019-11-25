@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(236, 229, 229);
+}
+
+.box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 28%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+
+h2 {
+    text-align: center;
+    margin: 10px 0;
+}
+
+form {
+    padding: 20px 20px 5px 20px;
+}
+
+.cell {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.cell>span {
+    width: 70px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.subBtn {
+    justify-content: center;
+}
+
+.subBtn button,
+#cancel {
+    margin: 15px;
+}
+.tip {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 15px;
+}

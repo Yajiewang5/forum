@@ -1,0 +1,61 @@
+{{extend './layout.html'}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/publish.css">
+{{/block}}
+
+{{block 'content'}}
+
+<main>
+    <div class="container">
+        <form action="" id="publish_form">
+            <div>
+                <label for="">title</label>
+                <input type="text" name="title">
+            </div>
+            <div>
+                <label for="">content</label>
+                <textarea name="content" id="" cols="30" rows="10"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">submit</button>
+        </form>
+    </div>
+</main>
+
+{{/block}}
+
+
+{{block 'script'}}
+<script>
+    $(function () {
+
+
+        $('.userInfo').on('click', function () {
+            $('.userCount').toggle()
+        })
+
+
+
+        $('#publish_form').on('submit', function (e) {
+            e.preventDefault()
+            let formData = $(this).serialize()
+            formData += `&nickname=${$('.userInfo').text().replace(/\s+/g, '')}`
+            $.ajax({
+                type: 'POST',
+                url: '/publish',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if (data.code === 0) {
+                        window.alert('post success, redirect to homepage')
+                        window.location.href = '/'
+                    } else {
+                        window.alert('post failed')
+                    }
+                }
+            })
+        })
+    })
+</script>
+{{/block}}

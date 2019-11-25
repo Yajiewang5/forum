@@ -1,0 +1,39 @@
+<header>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="/" class="toMain"><img class="logo" src="../public/img/blog.png" alt=""></a>
+            <form class="bs-example bs-example-form" role="form">
+                <div class="input-group">
+                    <input type="input" class="search" aria-describedby="basic-addon1">
+                </div>
+            </form>
+        </div>
+        <div class="navbar-right">
+            <ul>
+                <li class="navbar-list">
+                    <a href="/">Homepage</a>
+                </li>
+                
+                {{if user}}
+                <li>
+                    
+                    <a href="javascript:;" class="userInfo">
+                        {{user.nickname}}
+                        <img src="/public/img/xiala.png" class="icon-xiala" alt="">
+                    </a>
+                    <ol class="userCount">
+                        <li><a href="/userInfo">Personal information</a></li>
+                        <li><a href="/logout" class="logout">logout</a></li>
+                    </ol>
+                </li>
+                {{else}}
+                <li class="navbar-list">
+                    <a href="/login">login</a>
+                    <a href="/register">signup</a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+
+    </div>
+</header>
